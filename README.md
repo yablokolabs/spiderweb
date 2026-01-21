@@ -299,6 +299,8 @@ If you find Spiderweb useful, consider supporting its development:
 
 [![Buy Me A Coffee](https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png)](https://buymeacoffee.com/yablokolabs)
 
+![QR Code for Buy Me A Coffee](bmc_qr.png)
+
 **Sponsor Link**: https://buymeacoffee.com/yablokolabs
 
 ---
