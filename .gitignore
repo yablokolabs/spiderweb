@@ -13,6 +13,7 @@ parts/
 prime/
 stage/
 *.snap-build/
+snapcraft.login
 
 # IDE
 .vscode/

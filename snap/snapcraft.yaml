@@ -22,30 +22,29 @@ apps:
     command: bin/spiderweb
     plugs:
       - home
-      - removable-media
 
 parts:
   spiderweb:
     plugin: nil
     source: .
     build-packages:
-      - gcc
       - curl
       - xz-utils
     override-build: |
-      # Install Nim
-      mkdir -p $SNAPCRAFT_PART_INSTALL/nim
-      cd $SNAPCRAFT_PART_INSTALL/nim
-      curl -O -L https://nim-lang.org/download/nim-2.0.0-linux_x64.tar.xz
-      tar xf nim-2.0.0-linux_x64.tar.xz
-      export PATH=$SNAPCRAFT_PART_INSTALL/nim/nim-2.0.0/bin:$PATH
+      set -eux
 
-      # Install nimble dependencies
+      # Install Nim locally inside the build environment
+      mkdir -p nim
+      cd nim
+      curl -L -o nim.tar.xz https://nim-lang.org/download/nim-2.0.0-linux_x64.tar.xz
+      tar xf nim.tar.xz
+      export PATH=$PWD/nim-2.0.0/bin:$PATH
+
+      # Install Nim dependencies
       cd $SNAPCRAFT_PROJECT_DIR
-      $SNAPCRAFT_PART_INSTALL/nim/nim-2.0.0/bin/nimble install -y cligen
+      nimble install -y cligen
 
       # Build spiderweb
-      $SNAPCRAFT_PART_INSTALL/nim/nim-2.0.0/bin/nim c -d:release --opt:speed -o:$SNAPCRAFT_PART_INSTALL/bin/spiderweb src/spiderweb.nim
-
-    stage-packages:
-      - libc6
+      nim c -d:release --opt:speed \
+        -o:$SNAPCRAFT_PART_INSTALL/bin/spiderweb \
+        src/spiderweb.nim
