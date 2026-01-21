@@ -299,7 +299,9 @@ If you find Spiderweb useful, consider supporting its development:
 
 [![Buy Me A Coffee](https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png)](https://buymeacoffee.com/yablokolabs)
 
-![QR Code for Buy Me A Coffee](bmc_qr.png)
+<div align="center">
+  <img src="bmc_qr.png" alt="QR Code for Buy Me A Coffee" width="200">
+</div>
 
 **Sponsor Link**: https://buymeacoffee.com/yablokolabs
 
