@@ -20,8 +20,6 @@ proc matchesExtensions(path: string, extensions: seq[string]): bool =
       return true
   return false
 
-proc isNimFile(path: string): bool =
-  path.endsWith(".nim")
 
 proc walkCodeFiles*(rootDir: string, extensions: seq[string]): seq[CodeFile] =
   ## Recursively walks directory and collects all files with given extensions
