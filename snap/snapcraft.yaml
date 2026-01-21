@@ -1,0 +1,51 @@
+name: spiderweb
+base: core22
+version: '0.1'
+summary: Universal Code Debugger CLI for Nim codebases
+description: |
+  Spiderweb is a static analysis tool that shows function call relationships
+  in Nim codebases. It can display callers (who calls this function) and
+  callees (what this function calls) in both ASCII tree and JSON format.
+
+  Usage:
+    spiderweb file:function --show=callers|callees|both
+
+  Examples:
+    spiderweb test.nim:greet --show=callers
+    spiderweb src/main.nim:init --show=both
+
+grade: stable
+confinement: strict
+
+apps:
+  spiderweb:
+    command: bin/spiderweb
+    plugs:
+      - home
+      - removable-media
+
+parts:
+  spiderweb:
+    plugin: nil
+    source: .
+    build-packages:
+      - gcc
+      - curl
+      - xz-utils
+    override-build: |
+      # Install Nim
+      mkdir -p $SNAPCRAFT_PART_INSTALL/nim
+      cd $SNAPCRAFT_PART_INSTALL/nim
+      curl -O -L https://nim-lang.org/download/nim-2.0.0-linux_x64.tar.xz
+      tar xf nim-2.0.0-linux_x64.tar.xz
+      export PATH=$SNAPCRAFT_PART_INSTALL/nim/nim-2.0.0/bin:$PATH
+
+      # Install nimble dependencies
+      cd $SNAPCRAFT_PROJECT_DIR
+      $SNAPCRAFT_PART_INSTALL/nim/nim-2.0.0/bin/nimble install -y cligen
+
+      # Build spiderweb
+      $SNAPCRAFT_PART_INSTALL/nim/nim-2.0.0/bin/nim c -d:release --opt:speed -o:$SNAPCRAFT_PART_INSTALL/bin/spiderweb src/spiderweb.nim
+
+    stage-packages:
+      - libc6
