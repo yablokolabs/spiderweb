@@ -56,8 +56,10 @@ suite "Language Registry":
     # Clear registry first to get clean state
     clearRegistry()
 
-    let lang1 = LanguageAnalyzer(name: "Lang1", extensions: @[".l1"], keywords: @[])
-    let lang2 = LanguageAnalyzer(name: "Lang2", extensions: @[".l2"], keywords: @[])
+    let lang1 = LanguageAnalyzer(name: "Lang1", extensions: @[".l1"],
+        keywords: @[])
+    let lang2 = LanguageAnalyzer(name: "Lang2", extensions: @[".l2"],
+        keywords: @[])
 
     registerLanguage(lang1)
     registerLanguage(lang2)

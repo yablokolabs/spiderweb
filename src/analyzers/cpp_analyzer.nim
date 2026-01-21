@@ -32,7 +32,8 @@ proc extractCppFunctions(content: string, filepath: string): seq[FunctionDef] =
           line: i + 1
         ))
 
-proc extractCppCalls(content: string, funcName: string): seq[tuple[callee: string, count: int]] =
+proc extractCppCalls(content: string, funcName: string): seq[tuple[
+    callee: string, count: int]] =
   ## Extracts all function calls made within a specific C/C++ function
   result = @[]
   var callCounts = initTable[string, int]()
@@ -88,10 +89,14 @@ proc extractCppCalls(content: string, funcName: string): seq[tuple[callee: strin
         let callName = matches[0]
         # Skip C/C++ keywords and our own function name
         if callName notin ["if", "else", "for", "while", "do", "switch", "case",
-                           "return", "break", "continue", "goto", "sizeof", "typedef",
-                           "struct", "union", "enum", "class", "template", "namespace",
-                           "using", "public", "private", "protected", "virtual", "static",
-                           "const", "volatile", "inline", "extern", "new", "delete", "this"] and
+                           "return", "break", "continue", "goto", "sizeof",
+                           "typedef",
+                           "struct", "union", "enum", "class", "template",
+                           "namespace",
+                           "using", "public", "private", "protected", "virtual",
+                           "static",
+                           "const", "volatile", "inline", "extern", "new",
+                           "delete", "this"] and
            callName != funcName:
           if callCounts.hasKey(callName):
             callCounts[callName] += 1
@@ -114,7 +119,8 @@ proc createCppAnalyzer*(): LanguageAnalyzer =
                 "return", "break", "continue", "goto", "sizeof", "typedef",
                 "struct", "union", "enum", "class", "template", "namespace",
                 "using", "public", "private", "protected", "virtual", "static",
-                "const", "volatile", "inline", "extern", "new", "delete", "this"],
+                "const", "volatile", "inline", "extern", "new", "delete",
+                "this"],
     extractFunctions: extractCppFunctions,
     extractCalls: extractCppCalls
   )

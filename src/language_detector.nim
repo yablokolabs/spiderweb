@@ -29,7 +29,7 @@ proc parseShebang*(line: string): Option[string] =
         return some(interpreter)
 
     # Handle direct paths like /usr/bin/python3
-    let interpreter = lastPart.split()[0]  # Remove any arguments
+    let interpreter = lastPart.split()[0] # Remove any arguments
 
     # Normalize python versions to just "python"
     if interpreter.startsWith("python"):

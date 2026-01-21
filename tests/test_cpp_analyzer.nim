@@ -26,7 +26,7 @@ static void helper() {
     let analyzer = createCppAnalyzer()
     let functions = analyzer.extractFunctions(code, "test.c")
 
-    check functions.len >= 2  # May have false positives, so >= instead of ==
+    check functions.len >= 2 # May have false positives, so >= instead of ==
 
   test "extracts C function calls":
     let code = """

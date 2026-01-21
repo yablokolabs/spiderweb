@@ -26,14 +26,16 @@ proc extractJavaScriptFunctions(content: string, filepath: string): seq[Function
           line: i + 1
         ))
 
-proc extractJavaScriptCalls(content: string, funcName: string): seq[tuple[callee: string, count: int]] =
+proc extractJavaScriptCalls(content: string, funcName: string): seq[tuple[
+    callee: string, count: int]] =
   ## Extracts all function calls made within a specific JavaScript function
   result = @[]
   var callCounts = initTable[string, int]()
 
   let lines = content.split('\n')
   # Match: function name(, const name =, async function name(
-  let funcPattern = re("(?:function\\s+" & funcName & "\\s*\\(|const\\s+" & funcName & "\\s*=)")
+  let funcPattern = re("(?:function\\s+" & funcName & "\\s*\\(|const\\s+" &
+      funcName & "\\s*=)")
 
   var inFunction = false
   var braceDepth = 0
@@ -79,9 +81,12 @@ proc extractJavaScriptCalls(content: string, funcName: string): seq[tuple[callee
         let callName = matches[0]
         # Skip JavaScript keywords and our own function name
         if callName notin ["if", "else", "for", "while", "switch", "case", "try",
-                           "catch", "finally", "return", "throw", "break", "continue",
-                           "function", "var", "let", "const", "class", "import", "export",
-                           "await", "async", "typeof", "instanceof", "new", "delete"] and
+                           "catch", "finally", "return", "throw", "break",
+                           "continue",
+                           "function", "var", "let", "const", "class", "import",
+                           "export",
+                           "await", "async", "typeof", "instanceof", "new",
+                           "delete"] and
            callName != funcName:
           if callCounts.hasKey(callName):
             callCounts[callName] += 1
@@ -103,7 +108,8 @@ proc createJavaScriptAnalyzer*(): LanguageAnalyzer =
     keywords: @["if", "else", "for", "while", "switch", "case", "try",
                 "catch", "finally", "return", "throw", "break", "continue",
                 "function", "var", "let", "const", "class", "import", "export",
-                "await", "async", "typeof", "instanceof", "new", "delete", "void"],
+                "await", "async", "typeof", "instanceof", "new", "delete",
+                "void"],
     extractFunctions: extractJavaScriptFunctions,
     extractCalls: extractJavaScriptCalls
   )

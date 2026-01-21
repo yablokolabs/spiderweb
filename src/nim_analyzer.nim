@@ -44,7 +44,8 @@ proc extractCalls(content: string, funcName: string): seq[tuple[callee: string, 
   var callCounts = initTable[string, int]()
 
   let lines = content.split('\n')
-  let funcPattern = re("^\\s*(?:proc|func|method|template|macro)\\s+" & funcName & "\\b")
+  let funcPattern = re("^\\s*(?:proc|func|method|template|macro)\\s+" &
+      funcName & "\\b")
 
   var inFunction = false
   var braceDepth = 0
@@ -74,7 +75,8 @@ proc extractCalls(content: string, funcName: string): seq[tuple[callee: string, 
         let callName = matches[0]
         # Skip keywords and our own function name
         if callName notin ["if", "while", "for", "case", "when", "proc", "func",
-                           "method", "template", "macro", "echo"] and callName != funcName:
+                           "method", "template", "macro", "echo"] and
+                               callName != funcName:
           if callCounts.hasKey(callName):
             callCounts[callName] += 1
           else:

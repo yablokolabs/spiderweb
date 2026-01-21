@@ -5,7 +5,8 @@
 
 import os, strutils, options
 import parser, analyzer, tree_renderer, language_analyzer, language_registry, language_detector
-import analyzers/nim_analyzer, analyzers/python_analyzer, analyzers/javascript_analyzer
+import analyzers/nim_analyzer, analyzers/python_analyzer,
+    analyzers/javascript_analyzer
 import analyzers/rust_analyzer, analyzers/cpp_analyzer
 
 type
@@ -32,7 +33,8 @@ proc parseInput(input: string): tuple[file: string, function: string] =
   result.file = parts[0]
   result.function = parts[1]
 
-proc spiderweb(target: string, show: string = "both", language: string = "auto") =
+proc spiderweb(target: string, show: string = "both",
+    language: string = "auto") =
   ## Universal Code Debugger CLI - Shows function call relationships
   ##
   ## Usage:
@@ -97,8 +99,10 @@ proc spiderweb(target: string, show: string = "both", language: string = "auto")
     let funcDef = analyzeFunctionCalls(allFiles, targetFile, targetFunc, langAnalyzer)
 
     # Analyze relationships
-    let callers = if mode in {Callers, Both}: findCallers(allFiles, funcDef, langAnalyzer) else: @[]
-    let callees = if mode in {Callees, Both}: findCallees(allFiles, funcDef, langAnalyzer) else: @[]
+    let callers = if mode in {Callers, Both}: findCallers(allFiles, funcDef,
+        langAnalyzer) else: @[]
+    let callees = if mode in {Callees, Both}: findCallees(allFiles, funcDef,
+        langAnalyzer) else: @[]
 
     # Render output
     case mode
@@ -123,7 +127,8 @@ proc spiderweb(target: string, show: string = "both", language: string = "auto")
     echo "Unexpected error: " & e.msg
     quit(1)
 
-proc spiderwebCli(args: seq[string], show: string = "both", language: string = "auto") =
+proc spiderwebCli(args: seq[string], show: string = "both",
+    language: string = "auto") =
   ## CLI wrapper that accepts positional arguments
   if args.len == 0:
     echo "Error: Missing target argument"
@@ -145,5 +150,5 @@ when isMainModule:
              "args": "Target in format 'file:function'",
              "show": "What to show: callers, callees, or both (default: both)",
              "language": "Language to analyze (default: auto-detect from file extension)"
-           },
-           short = {"show": 's', "language": 'l'})
+    },
+    short = {"show": 's', "language": 'l'})

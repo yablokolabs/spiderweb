@@ -6,7 +6,8 @@
 import json, os
 import language_analyzer
 
-proc renderCallers*(targetFunc: FunctionDef, callers: seq[FunctionCall]): string =
+proc renderCallers*(targetFunc: FunctionDef, callers: seq[
+    FunctionCall]): string =
   ## Renders ASCII tree of callers
   result = ""
 
@@ -22,11 +23,13 @@ proc renderCallers*(targetFunc: FunctionDef, callers: seq[FunctionCall]): string
     let prefix = if isLast: "└── " else: "├── "
     let callerFile = extractFilename(call.caller.file)
     let location = callerFile & ":" & call.caller.name
-    let countStr = if call.count > 1: " (" & $call.count & " calls)" else: " (1 call)"
+    let countStr = if call.count > 1: " (" & $call.count &
+        " calls)" else: " (1 call)"
 
     result.add(prefix & location & countStr & "\n")
 
-proc renderCallees*(targetFunc: FunctionDef, callees: seq[FunctionCall]): string =
+proc renderCallees*(targetFunc: FunctionDef, callees: seq[
+    FunctionCall]): string =
   ## Renders ASCII tree of callees
   result = ""
 
@@ -72,7 +75,7 @@ proc toJsonObject*(targetFunc: FunctionDef, callers: seq[FunctionCall],
 
   var callersArray = newJArray()
   for call in callers:
-    callersArray.add(%* {
+    callersArray.add( %* {
       "caller": call.caller.name,
       "file": call.caller.file,
       "line": call.caller.line,

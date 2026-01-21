@@ -27,7 +27,8 @@ proc extractPythonFunctions(content: string, filepath: string): seq[FunctionDef]
         line: i + 1
       ))
 
-proc extractPythonCalls(content: string, funcName: string): seq[tuple[callee: string, count: int]] =
+proc extractPythonCalls(content: string, funcName: string): seq[tuple[
+    callee: string, count: int]] =
   ## Extracts all function calls made within a specific Python function
   result = @[]
   var callCounts = initTable[string, int]()
@@ -81,8 +82,10 @@ proc extractPythonCalls(content: string, funcName: string): seq[tuple[callee: st
         let callName = matches[0]
         # Skip Python keywords and our own function name
         if callName notin ["if", "elif", "else", "for", "while", "with", "try",
-                           "except", "finally", "class", "import", "from", "return",
-                           "yield", "raise", "assert", "pass", "break", "continue",
+                           "except", "finally", "class", "import", "from",
+                           "return",
+                           "yield", "raise", "assert", "pass", "break",
+                           "continue",
                            "lambda", "def", "print"] and callName != funcName:
           if callCounts.hasKey(callName):
             callCounts[callName] += 1

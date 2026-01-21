@@ -23,7 +23,8 @@ proc extractRustFunctions(content: string, filepath: string): seq[FunctionDef] =
         line: i + 1
       ))
 
-proc extractRustCalls(content: string, funcName: string): seq[tuple[callee: string, count: int]] =
+proc extractRustCalls(content: string, funcName: string): seq[tuple[
+    callee: string, count: int]] =
   ## Extracts all function calls made within a specific Rust function
   result = @[]
   var callCounts = initTable[string, int]()
@@ -75,9 +76,12 @@ proc extractRustCalls(content: string, funcName: string): seq[tuple[callee: stri
         let callName = matches[0]
         # Skip Rust keywords and our own function name
         if callName notin ["if", "else", "match", "for", "while", "loop", "break",
-                           "continue", "return", "fn", "let", "mut", "const", "static",
-                           "struct", "enum", "trait", "impl", "type", "where", "use",
-                           "mod", "pub", "crate", "super", "self", "async", "await", "unsafe"] and
+                           "continue", "return", "fn", "let", "mut", "const",
+                           "static",
+                           "struct", "enum", "trait", "impl", "type", "where",
+                           "use",
+                           "mod", "pub", "crate", "super", "self", "async",
+                           "await", "unsafe"] and
            callName != funcName:
           if callCounts.hasKey(callName):
             callCounts[callName] += 1
@@ -99,7 +103,8 @@ proc createRustAnalyzer*(): LanguageAnalyzer =
     keywords: @["if", "else", "match", "for", "while", "loop", "break",
                 "continue", "return", "fn", "let", "mut", "const", "static",
                 "struct", "enum", "trait", "impl", "type", "where", "use",
-                "mod", "pub", "crate", "super", "self", "async", "await", "unsafe"],
+                "mod", "pub", "crate", "super", "self", "async", "await",
+                "unsafe"],
     extractFunctions: extractRustFunctions,
     extractCalls: extractRustCalls
   )

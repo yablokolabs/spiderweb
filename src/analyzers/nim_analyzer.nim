@@ -23,13 +23,15 @@ proc extractNimFunctions(content: string, filepath: string): seq[FunctionDef] =
         line: i + 1
       ))
 
-proc extractNimCalls(content: string, funcName: string): seq[tuple[callee: string, count: int]] =
+proc extractNimCalls(content: string, funcName: string): seq[tuple[
+    callee: string, count: int]] =
   ## Extracts all function calls made within a specific Nim function
   result = @[]
   var callCounts = initTable[string, int]()
 
   let lines = content.split('\n')
-  let funcPattern = re("^\\s*(?:proc|func|method|template|macro)\\s+" & funcName & "\\b")
+  let funcPattern = re("^\\s*(?:proc|func|method|template|macro)\\s+" &
+      funcName & "\\b")
 
   var inFunction = false
 
@@ -58,7 +60,8 @@ proc extractNimCalls(content: string, funcName: string): seq[tuple[callee: strin
         let callName = matches[0]
         # Skip keywords and our own function name
         if callName notin ["if", "while", "for", "case", "when", "proc", "func",
-                           "method", "template", "macro", "echo"] and callName != funcName:
+                           "method", "template", "macro", "echo"] and
+                               callName != funcName:
           if callCounts.hasKey(callName):
             callCounts[callName] += 1
           else:

@@ -14,8 +14,10 @@ type
     callee*: string
     count*: int
 
-  ExtractFunctionsProc* = proc(content: string, filepath: string): seq[FunctionDef] {.closure.}
-  ExtractCallsProc* = proc(content: string, funcName: string): seq[tuple[callee: string, count: int]] {.closure.}
+  ExtractFunctionsProc* = proc(content: string, filepath: string): seq[
+      FunctionDef] {.closure.}
+  ExtractCallsProc* = proc(content: string, funcName: string): seq[tuple[
+      callee: string, count: int]] {.closure.}
 
   LanguageAnalyzer* = object
     name*: string

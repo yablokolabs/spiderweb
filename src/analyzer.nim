@@ -50,7 +50,8 @@ proc findCallees*(files: seq[CodeFile], targetFunc: FunctionDef,
         # If not found, check other files
         if not found:
           for otherFile in files:
-            let otherFuncs = analyzer.extractFunctions(otherFile.content, otherFile.path)
+            let otherFuncs = analyzer.extractFunctions(otherFile.content,
+                otherFile.path)
             for fn in otherFuncs:
               if fn.name == call.callee:
                 foundFunc = fn
@@ -67,7 +68,8 @@ proc findCallees*(files: seq[CodeFile], targetFunc: FunctionDef,
         ))
 
 proc analyzeFunctionCalls*(files: seq[CodeFile], targetFile: string,
-                           targetFunc: string, analyzer: LanguageAnalyzer): FunctionDef =
+                           targetFunc: string,
+                               analyzer: LanguageAnalyzer): FunctionDef =
   ## Finds the target function definition
   for file in files:
     let funcs = analyzer.extractFunctions(file.content, file.path)
