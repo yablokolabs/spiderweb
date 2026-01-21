@@ -245,6 +245,22 @@ nim c -r test.nim
 ./spiderweb test.nim:greet --show=callers
 ```
 
+## 📁 Excluded Directories
+
+Spiderweb automatically excludes certain directories from scanning to avoid analyzing build artifacts, dependencies, and generated code:
+
+- `.git` - Git repository data
+- `nimcache` - Nim compilation cache
+- `node_modules` - Node.js dependencies
+- `.venv`, `venv` - Python virtual environments
+- `parts`, `stage`, `prime` - Snapcraft build directories
+- `build` - Common build output
+- `dist` - Distribution bundles
+- `target` - Rust/Cargo build output
+- `__pycache__` - Python bytecode cache
+- `.cache` - Various cache directories
+- `.nori`, `.claude` - AI assistant configuration
+
 ## 📏 Constraints
 
 - Pure Nim implementation

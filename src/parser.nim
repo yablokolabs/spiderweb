@@ -21,6 +21,31 @@ proc matchesExtensions(path: string, extensions: seq[string]): bool =
   return false
 
 
+const
+  # Directories to exclude from code scanning
+  excludedDirs = [
+    ".git",         # Git repository data
+    "nimcache",     # Nim compilation cache
+    "node_modules", # Node.js dependencies
+    ".venv",        # Python virtual environments
+    "venv",         # Python virtual environments (alternate)
+    "parts",        # Snapcraft build staging
+    "build",        # Common build output directory
+    "dist",         # Distribution/bundle output
+    "target",       # Rust/Cargo build output
+    "stage",        # Snapcraft staging directory
+    "prime",        # Snapcraft prime directory
+    "__pycache__",  # Python bytecode cache
+    ".cache",       # Various cache directories
+    ".nori",        # Nori AI configuration/bundled scripts
+    ".claude",      # Claude configuration/bundled scripts
+  ]
+
+proc isExcludedDir(path: string): bool =
+  ## Checks if a directory should be excluded from scanning
+  let dirName = extractFilename(path)
+  return dirName in excludedDirs
+
 proc walkCodeFiles*(rootDir: string, extensions: seq[string]): seq[CodeFile] =
   ## Recursively walks directory and collects all files with given extensions
   result = @[]
@@ -38,8 +63,7 @@ proc walkCodeFiles*(rootDir: string, extensions: seq[string]): seq[CodeFile] =
         except IOError:
           discard
     of pcDir:
-      if not path.endsWith("/.git") and not path.endsWith("/nimcache") and
-         not path.endsWith("/node_modules") and not path.endsWith("/.venv"):
+      if not isExcludedDir(path):
         result.add(walkCodeFiles(path, extensions))
     else:
       discard
