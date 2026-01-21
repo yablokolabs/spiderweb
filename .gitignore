@@ -6,6 +6,7 @@ htmldocs/
 # Binary
 spiderweb
 src/spiderweb
+tests/test_*
 
 # Snap
 *.snap

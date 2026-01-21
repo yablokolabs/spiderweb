@@ -1,18 +1,27 @@
 name: spiderweb
 base: core22
 version: '0.1'
-summary: Universal Code Debugger CLI for Nim codebases
+summary: Universal Code Debugger CLI - Multi-language static analysis tool
 description: |
-  Spiderweb is a static analysis tool that shows function call relationships
-  in Nim codebases. It can display callers (who calls this function) and
-  callees (what this function calls) in both ASCII tree and JSON format.
+  Spiderweb is a lightweight, regex-based static analysis tool that instantly shows:
+  - Callers: Which functions call a target function
+  - Callees: Which functions are called by a target function
+  - Both: Complete call relationship tree
+
+  Supported Languages:
+  - Python (.py, .pyi)
+  - JavaScript/TypeScript (.js, .jsx, .ts, .tsx, .mjs, .cjs)
+  - Nim (.nim, .nims, .nimble)
+  - Rust (.rs)
+  - C/C++ (.c, .cpp, .cc, .cxx, .h, .hpp, .hxx)
 
   Usage:
     spiderweb file:function --show=callers|callees|both
 
   Examples:
-    spiderweb test.nim:greet --show=callers
-    spiderweb src/main.nim:init --show=both
+    spiderweb test.py:greet --show=callers
+    spiderweb test.nim:greet --show=callees
+    spiderweb main.rs:main --show=both
 
 grade: stable
 confinement: strict
