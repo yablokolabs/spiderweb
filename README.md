@@ -1,5 +1,7 @@
 # 🕸️ Spiderweb v0.1
 
+[![spiderweb](https://snapcraft.io/spiderweb/badge.svg)](https://snapcraft.io/spiderweb)
+
 Universal Code Debugger CLI - Multi-language static analysis tool that visualizes function call relationships.
 
 **Developer:** Yabloko Labs Ltd (London, UK)
